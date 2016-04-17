@@ -2,7 +2,7 @@ package Java102.Hw2;
 /*
 *  Name : Rabia Abismail
 *  ID : 140201209
-*
+*  Project on GitHub :
 **/
 
 
@@ -10,7 +10,7 @@ public class Homework2 {
     private static boolean flag;
     private static int tmp;
 
-    public static void main(String[] ar){
+    public static void main(String[] arg){
 
         int[][] grid = new int[][]{{2, 0, 1, 1, 0, 8}, {2, 1, 0, 5, 4, 0}, {1, 2, 1, 2, 1, 3}, {2, 5, 2,
                 0, 1, 0}, {0, 0, 2, 2, 7, 2}, {2, 0, 1, 1, 0, 0}};
