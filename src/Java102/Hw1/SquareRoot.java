@@ -10,6 +10,8 @@ public class SquareRoot {
         System.out.println("the square root of 650 is: " + findSquareRoot(650, 10, 5));
         System.out.println("the square root of 650 is: " + findSquareRootRec(650, 10, 5));
     }
+
+
     // the method using usual way to find square
     private static double findSquareRoot(double n, int guess, int error){
         if (n<0)

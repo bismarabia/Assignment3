@@ -3,17 +3,23 @@ package Java102.Hw2;
 *  Name : Rabia Abismail
 *  ID : 140201209
 *  Project on GitHub :  https://git.io/vwtVm
-**/
+*/
 
 
 public class Homework2 {
-    private static boolean flag;
-    private static int tmp;
+    private static int tmp;       // to store the value of grid[row][column]
+    private static int c;
 
     public static void main(String[] arg){
 
-        int[][] grid = new int[][]{{2, 0, 1, 1, 0, 8}, {2, 1, 0, 5, 4, 0}, {1, 2, 1, 2, 1, 3}, {2, 5, 2,
-                0, 1, 0}, {0, 0, 2, 2, 7, 2}, {2, 0, 1, 1, 0, 0}};
+        int[][] grid = new int[][]{
+                {2, 0, 1, 1, 0, 8},
+                {2, 1, 0, 2, 4, 0},
+                {1, 2, 3, 1, 1, 3},
+                {2, 3, 2, 0, 0, 0},
+                {0, 0, 5, 8, 7, 2},
+                {2, 0, 1, 1, 0, 0}};
+        // before calling mergeNumbers method
         for (int[] aGrid : grid) {
             for (int j = 0; j < grid.length; j++)
                 System.out.print(aGrid[j] + " ");
@@ -23,6 +29,7 @@ public class Homework2 {
         System.out.println();
         mergeNumbers(grid, 3, 3, 1);
 
+        // After calling mergeNumbers method
         for (int[] aGrid : grid) {
             for (int j = 0; j < grid.length; j++)
                 System.out.print(aGrid[j] + " ");
@@ -32,145 +39,190 @@ public class Homework2 {
 
     private static void mergeNumbers(int[][] grid, int row, int column, int nextNumber) {
 
-        grid[row][column] = grid[row][column] == 0 ? nextNumber : grid[row][column];
+        if (grid[row][column] == 0)
+            grid[row][column] = nextNumber;
+        else
+            return;
 
         tmp = grid[row][column];
-        while (checkNeighbors(grid, row, column)){
+        while (checkNeighbor(grid, row, column)){
             checkUps    (grid, row-1, column, row, column);
             checkDowns  (grid, row+1, column, row, column);
             checkRights (grid, row, column+1, row, column);
             checkLefts  (grid, row, column-1, row, column);
 
-            grid[row][column]++;
+            if (c>2)
+                grid[row][column]++;
+            else
+                break;
         }
     }
-
-    private static boolean checkNeighbors(int[][] grid, int row, int column) {
+    // this method checks the first upper, down, right and left neighbor
+    private static boolean checkNeighbor(int[][] grid, int row, int column) {
         return grid[row][column] == grid[row-1][column]
                 || grid[row+1][column] == grid[row][column]
                 || grid[row][column-1] == grid[row][column]
                 || grid[row][column+1] == grid[row][column];
     }
+
+    // this method checks the first upper neighbor
     private static boolean checkUpNeighbors(int[][] grid, int row, int column) {
         return grid[row-1][column] == tmp;
     }
+
+    // this method checks the first down neighbor
     private static boolean checkDownNeighbors(int[][] grid, int row, int column) {
         return grid[row+1][column] == tmp;
     }
+
+    // this method checks the first right neighbor
     private static boolean checkRightNeighbors(int[][] grid, int row, int column) {
-        return grid[row][column+1] == grid[row][column+1];
+        return grid[row][column+1] == tmp;
     }
+
+    // this method checks the first left neighbor
     private static boolean checkLeftNeighbors(int[][] grid, int row, int column) {
         return grid[row][column-1] == tmp;
     }
 
-    private static void checkUps(int[][] grid, int cr, int cc, int r, int c){
-        int counter = 0, element = grid[r][c];
-        flag = false;
-        while (grid[cr][cc] == element && counter<3 && r-counter>0){
-            if (grid[cr][cc-1] == element){
-                grid[cr][cc-1] = 0;
-                flag = !flag;
+
+    //       - checkUps(int[][] grid, int currentRow, int currentColumn, int row, int column)
+//             ==> travels along the upside of grid[row][column] and merges the identical adjacent number
+//
+//       - checkDowns(int[][] grid, int currentRow, int currentColumn, int row, int column)
+//             ==> travels along the downside of grid[row][column] and merges the identical adjacent number
+//
+//       - checkRights(int[][] grid, int currentRow, int currentColumn, int row, int column)
+//             ==> travels along the upside of grid[row][column] and merges the identical adjacent number
+//
+//       - checkLefts(int[][] grid, int currentRow, int currentColumn, int row, int column)
+//             ==> travels along the upside of grid[row][column] and merges the identical adjacent number
+
+    private static void checkUps(int[][] grid, int currentRow, int currentColumn, int row, int column){
+        int counter = 0, element = grid[row][column];
+        c=0;
+        while (grid[currentRow][currentColumn] == element && row-counter>0){
+            if (grid[currentRow][currentColumn-1] == element){
+                grid[currentRow][currentColumn-1] = 0;
+                c++;
             }
-            if (grid[cr][cc+1] == element){
-                grid[cr][cc+1] = 0;
-                flag = !flag;
+            if (grid[currentRow][currentColumn+1] == element){
+                grid[currentRow][currentColumn+1] = 0;
+                c++;
             }
-            if (counter>=1) {
-                grid[cr][cc] = 0;
-                grid[cr+1][cc] = 0;
-            } else {
-                grid[cr][cc] = 0;
-                if (!checkLeftNeighbors(grid, r, c) && !checkDownNeighbors(grid, r, c)
-                        && !checkRightNeighbors(grid, r, c))
-                    grid[cr][cc] = tmp;
+            if (c>0) {
+                grid[currentRow][currentColumn] = 0;
+                c++;
+//                if (counter>=1 )
+//                    grid[currentRow+1][currentColumn] = 0;
+//            } else {
+//                //grid[currentRow][currentColumn] = 0;
+//                System.out.println(checkLeftNeighbors(grid, row, column));
+//                if (!checkLeftNeighbors(grid, row, column) || !checkDownNeighbors(grid, row, column)
+//                        || !checkRightNeighbors(grid, row, column)){
+//                    grid[currentRow][currentColumn] = tmp;
+//
+//                }
             }
             counter++;
-            if (cr>0)   cr--;
+            // in case we exceed the boundaries
+            if (currentRow>0)   currentRow--;
+            else
+                break;
+        }
+
+    }
+    private static void checkDowns(int[][] grid, int currentRow, int currentColumn, int row, int column){
+        int counter = 0, element = grid[row][column];
+        c=0;
+        while (grid[currentRow][currentColumn] == element && row+counter<grid.length){
+            if (grid[currentRow][currentColumn-1] == element){
+                grid[currentRow][currentColumn-1] = 0;
+                c++;
+            }
+            if (grid[currentRow][currentColumn+1] == element){
+                grid[currentRow][currentColumn+1] = 0;
+                c++;
+            }
+            if (c>0) {
+                grid[currentRow][currentColumn] = 0;
+                c++;
+//                if (counter>=1 )
+//                    grid[currentRow-1][currentColumn] = 0;
+//            } else {
+//                grid[currentRow][currentColumn] = 0;
+//                if (!checkUpNeighbors(grid, row, column) || !checkLeftNeighbors(grid, row, column)
+//                        || !checkRightNeighbors(grid, row, column)) {
+//                    grid[currentRow][currentColumn] = tmp;
+//                }
+            }
+            counter++;
+            // in case we exceed the boundaries
+            if (currentRow < grid.length-1) currentRow++;
             else
                 break;
         }
     }
-    private static void checkDowns(int[][] grid, int cr, int cc, int r, int c){
-        int counter = 0, element = grid[r][c];
-        flag = false;
-        while (grid[cr][cc] == element && counter<2 && r+counter<6){
-            if (grid[cr][cc-1] == element){
-                grid[cr][cc-1] = 0;
-                flag = true;
+    private static void checkRights(int[][] grid, int currentRow, int currentColumn, int row, int column){
+        int counter = 0, element = grid[row][column];
+        c=0;
+        while (grid[currentRow][currentColumn] == element && column+counter <6){
+            if (grid[currentRow-1][currentColumn] == element){
+                grid[currentRow-1][currentColumn] = 0;
+                c++;
             }
-            if (grid[cr][cc+1] == element){
-                grid[cr][cc+1] = 0;
-                flag = true;
+            if (grid[currentRow+1][currentColumn] == element){
+                grid[currentRow+1][currentColumn] = 0;
+                c++;
             }
-            if (flag) {
-                grid[cr][cc] = 0;
-                if (counter>=1 )
-                    grid[cr-1][cc] = 0;
-            } else {
-                grid[cr][cc] = 0;
-                if (!checkUpNeighbors(grid, r, c) && !checkLeftNeighbors(grid, r, c)
-                        && !checkRightNeighbors(grid, r, c))
-                    grid[cr][cc] = tmp;
+            if (c>0) {
+                grid[currentRow][currentColumn] = 0;
+                c++;
+//                if (counter>=1)
+//                    grid[currentRow][currentColumn-1] = 0;
+//            }else {
+//                grid[currentRow][currentColumn] = 0;
+//                if (!checkUpNeighbors(grid, row, column) || !checkDownNeighbors(grid, row, column)
+//                        || !checkLeftNeighbors(grid, row, column)){
+//                    grid[currentRow][currentColumn] = tmp;
+//                }
             }
             counter++;
-            if (cr < grid.length-1) cr++;
+            // in case we exceed the boundaries
+            if (currentColumn < grid.length-1) currentColumn++;
             else
                 break;
         }
+
     }
-    private static void checkRights(int[][] grid, int cr, int cc, int r, int c){
-        int counter = 0, element = grid[r][c];
-        flag = false;
-        while (grid[cr][cc] == element && counter < 2 && c+counter <6){
-            if (grid[cr-1][cc] == element){
-                grid[cr-1][cc] = 0;
-                flag = true;
+    private static void checkLefts(int[][] grid, int currentRow, int currentColumn, int row, int column){
+        int counter = 0, element = grid[row][column];
+        c=0;
+        while (grid[currentRow][currentColumn] == element && column-counter>0){
+            if (grid[currentRow-1][currentColumn] == element) {
+                grid[currentRow-1][currentColumn] = 0;
+                c++;
             }
-            if (grid[cr+1][cc] == element){
-                grid[cr+1][cc] = 0;
-                flag = true;
+            if (grid[currentRow+1][currentColumn] == element){
+                grid[currentRow+1][currentColumn] = 0;
+                c++;
             }
-            if (flag) {
-                grid[cr][cc] = 0;
-                if (counter>=1)
-                    grid[cr][cc-1] = 0;
-            }else {
-                grid[cr][cc] = 0;
-                if (!checkUpNeighbors(grid, r, c) && !checkDownNeighbors(grid, r, c)
-                        && !checkLeftNeighbors(grid, r, c))
-                    grid[cr][cc] = tmp;
+            if (c>0) {
+                grid[currentRow][currentColumn] = 0;
+                c++;
+//                if (counter>=1 )
+//                    grid[currentRow][currentColumn+1] = 0;
             }
+//            else {
+//                grid[currentRow][currentColumn] = 0;
+//                if (!checkUpNeighbors(grid, row, column) || !checkDownNeighbors(grid, row, column)
+//                        || !checkRightNeighbors(grid, row, column)){
+//                    grid[currentRow][currentColumn] = tmp;
+//                }
+//            }
             counter++;
-            if (cc < grid.length-1) cc++;
-            else
-                break;
-        }
-    }
-    private static void checkLefts(int[][] grid, int cr, int cc, int r, int c){
-        int counter = 0, element = grid[r][c];
-        flag = false;
-        while (grid[cr][cc] == element && counter<3 && c-counter>0){
-            if (grid[cr-1][cc] == element) {
-                grid[cr-1][cc] = 0;
-                flag = true;
-            }
-            if (grid[cr+1][cc] == element){
-                grid[cr+1][cc] = 0;
-                flag =true;
-            }
-            if (counter>=1) {
-                grid[cr][cc] = 0;
-                grid[cr][cc+1] = 0;
-            }
-            else {
-                grid[cr][cc] = 0;
-                if (!checkUpNeighbors(grid, r, c) && !checkDownNeighbors(grid, r, c)
-                        && !checkRightNeighbors(grid, r, c))
-                    grid[cr][cc] = tmp;
-            }
-            counter++;
-            if (cc>0) cc--;
+            // in case we exceed the boundaries
+            if (currentColumn>0) currentColumn--;
             else
                 break;
         }
