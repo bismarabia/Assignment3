@@ -193,7 +193,7 @@ class PreOrder<AnyType> extends TreeIterator<AnyType>
 class LevelOrder<AnyType> extends TreeIterator<AnyType>
 {
     public static final int DEFAULT_CAPACITY = 10;
-    public LevelOrder( BinaryTree<AnyType> theTree )
+    LevelOrder(BinaryTree<AnyType> theTree)
     {
         super( theTree );
         q = new ListQueue<BinaryNode<AnyType>>();

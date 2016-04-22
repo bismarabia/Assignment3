@@ -36,7 +36,7 @@ public class Homework2 {
             System.out.println();
         }
     }
-
+    // the merge method
     private static void mergeNumbers(int[][] grid, int row, int column, int nextNumber) {
 
         if (grid[row][column] == 0)
@@ -57,6 +57,7 @@ public class Homework2 {
                 break;
         }
     }
+
     // this method checks the first upper, down, right and left neighbor
     private static boolean checkNeighbor(int[][] grid, int row, int column) {
         return grid[row][column] == grid[row-1][column]

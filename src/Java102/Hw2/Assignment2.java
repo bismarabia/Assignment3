@@ -2,7 +2,7 @@ package Java102.Hw2;
  /*
 *  Name : Rabia Abismail
 *  ID : 140201209
-*  Project on GitHub :  https://git.io/vwtVm
+*  Project on GitHub :
 */
 
 public class Assignment2 {
@@ -14,21 +14,21 @@ public class Assignment2 {
         int[][] grid = new int[][]{
                 {0,2,2,2,2,2},
                 {1,1,2,2,2,2},
-                {2,2,1,1,1,2},
-                {2,2,1,2,1,2},
+                {2,2,2,1,0,2},
+                {2,2,2,0,1,2},
                 {2,2,1,2,1,2},
                 {2,2,2,2,2,2}};
-        // before calling mergeNumbers method
+        System.out.println("before calling the merge method ");
         printArray(grid);
-        System.out.println();
 
+        System.out.println();
         mergeNumbers(grid, 0, 0, 1);
 
-        // After calling mergeNumbers method
+        System.out.println("After calling the merge method ");
         printArray(grid);
-        System.out.println();
     }
 
+    // the merge method
     private static void mergeNumbers(int[][] grid, int row, int column, int nextNumber) {
         // if the field is zero (i.e is empty), we will assign nextNumber to it.
         if (grid[row][column] == 0)
@@ -64,6 +64,7 @@ public class Assignment2 {
             }
         }
     }
+
     // this method checks the upper neighbors
     private static void checkUps(int[][] grid, int row, int column, int nextNumber){
         // currentRow ==> previous row
@@ -154,12 +155,11 @@ public class Assignment2 {
         }
     }
 
-    /*
-    *   There is a memory problem of using oldArray = newArray, since they
-    *   will be pointing to same memory location. That is, if you change
-    *   one of them the other will change accordingly
-    *   For that reason, I implemented copyArray method
-    */
+    //    There is a memory problem of using oldArray = newArray, since they
+    //    will be pointing to same memory location. That is, if you change
+    //    one of them the other will change accordingly
+    //    For that reason, I implemented copyArray method
+
     private static void copyArray(int[][] oldArray, int[][] newArray){
         for (int i=0; i<oldArray.length; i++)
             newArray[i] = oldArray[i].clone();

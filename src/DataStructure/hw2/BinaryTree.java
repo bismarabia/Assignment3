@@ -1,29 +1,14 @@
 package DataStructure.hw2;
-// BinaryTree class; stores a binary tree.
-//
-// CONSTRUCTION: with (a) no parameters or (b) an object to
-//    be placed in the root of a one-element tree.
-//
-// *******************PUBLIC OPERATIONS**********************
-// Various tree traversals, size, height, isEmpty, makeEmpty.
-// Also, the following tricky method:
-// void merge( Object root, BinaryTree t1, BinaryTree t2 )
-//                        --> Construct a new tree
-// *******************ERRORS*********************************
-// Error message printed for illegal merges.
 
-/**
- * BinaryTree class that illustrates the calling of
- * BinaryNode recursive routines and merge.
- */
+
 public class BinaryTree<AnyType>
 {
-    public BinaryTree( )
+    BinaryTree()
     {
         root = null;
     }
 
-    public BinaryTree( AnyType rootItem )
+    BinaryTree(AnyType rootItem)
     {
         root = new BinaryNode<AnyType>( rootItem, null, null );
     }
@@ -34,7 +19,7 @@ public class BinaryTree<AnyType>
             root.printPreOrder( );
     }
 
-    public void printInOrder( )
+    private void printInOrder()
     {
         if( root != null )
            root.printInOrder( );
@@ -56,14 +41,7 @@ public class BinaryTree<AnyType>
         return root == null;
     }
     
-    /**
-     * Merge routine for BinaryTree class.
-     * Forms a new tree from rootItem, t1 and t2.
-     * Does not allow t1 and t2 to be the same.
-     * Correctly handles other aliasing conditions.
-     */
-    public void merge( AnyType rootItem, BinaryTree<AnyType> t1, BinaryTree<AnyType> t2 )
-    {
+    void merge(AnyType rootItem, BinaryTree<AnyType> t1, BinaryTree<AnyType> t2) {
         if( t1.root == t2.root && t1.root != null )
         {
             System.err.println( "leftTree==rightTree; merge aborted" );
@@ -90,15 +68,14 @@ public class BinaryTree<AnyType>
         return BinaryNode.height( root );
     }
 
-    public BinaryNode<AnyType> getRoot( )
+    BinaryNode<AnyType> getRoot()
     {
         return root;
     }
     
     private BinaryNode<AnyType> root;
 
-    static public void main( String [ ] args )
-    {
+    static public void main( String [ ] args ) {
         BinaryTree<Integer> t1 = new BinaryTree<Integer>( 1 );
         BinaryTree<Integer> t3 = new BinaryTree<Integer>( 3 );
         BinaryTree<Integer> t5 = new BinaryTree<Integer>( 5 );
@@ -106,20 +83,116 @@ public class BinaryTree<AnyType>
         BinaryTree<Integer> t2 = new BinaryTree<Integer>( );
         BinaryTree<Integer> t4 = new BinaryTree<Integer>( );
         BinaryTree<Integer> t6 = new BinaryTree<Integer>( );
+        BinaryTree<Integer> t8 = new BinaryTree<Integer>(8);
+        BinaryTree<Integer> t9 = new BinaryTree<Integer>(9);
+        BinaryTree<Integer> t10 = new BinaryTree<Integer>(10);
+        BinaryTree<Integer> t11 = new BinaryTree<Integer>(11);
+        BinaryTree<Integer> t12 = new BinaryTree<Integer>(12);
+        BinaryTree<Integer> t13 = new BinaryTree<Integer>(13);
+        BinaryTree<Integer> t14 = new BinaryTree<Integer>(14);
+        BinaryTree<Integer> t15 = new BinaryTree<Integer>(15);
 
+        t1.merge(1, t8, t9);
+        t3.merge(3, t10, t11);
+        t5.merge(5, t12, t13);
+        t7.merge(7, t14, t15);
+        //t7.getRoot().setLeft(new BinaryNode<Integer>(14, null, null));
         t2.merge( 2, t1, t3 );
         t6.merge( 6, t5, t7 );
         t4.merge( 4, t2, t6 );
 
-        System.out.println( "t4 should be perfect 1-7; t2 empty" );
-        System.out.println( "----------------" );
-        System.out.println( "t4" );
-        t4.printInOrder( );
-        System.out.println( "----------------" );
-        System.out.println( "t2" );
-        t2.printInOrder( );
-        System.out.println( "----------------" );
-        System.out.println( "t4 size: " + t4.size( ) );
-        System.out.println( "t4 height: " + t4.height( ) );
+        System.out.println(countLeavesAtDepth(t4.getRoot(), 0, 3));
+        System.out.println(isFull(t4.getRoot()));
+
+        System.out.println("Before mirroring the tree ");
+        t4.printInOrder();
+        mirrorTree(t4.getRoot());
+        System.out.println("After mirroring the tree ");
+        t4.printInOrder();
+
+//        System.out.println("Heyy ");
+//        BinaryNode bn = t4.getRoot().getLeft().duplicate();
+//        t4.getRoot().setRight(bn);
+//        System.out.println(t4.getRoot().getRight().getElement());
+//        t4.printInOrder();
+
+
     }
+
+    private static int countLeavesAtDepth(BinaryNode<Integer> binaryNode, int current, int depth) {
+        /* current is equal to 0 initially, then it'll increment until it reaches depth
+        *  we have three case:
+        *   1- if binaryNode is null (i.e it's empty, no node)              ==> 0
+        *   2- if we reach the case where current is equal to depth         ==> 1
+        *   3- otherwise, we recurse over the left child with current+1
+        *           and right child with current+1
+        * */
+        if (binaryNode == null )
+            return 0;
+        if (current == depth)
+            return 1;
+        return countLeavesAtDepth(binaryNode.getLeft(), current+1, depth)
+                + countLeavesAtDepth(binaryNode.getRight(), current+1, depth);
+    }
+    private static boolean isFull(BinaryNode<Integer> binaryNode) {
+        /* we have three case:
+        *   1- if binaryNode is null (i.e it's empty)                       ==> true
+        *   2- if BinaryTree has one root with no right and left child      ==> true
+        *   3- if the root has the right and left child then we recurse over
+        *           the left child and right child
+        *   4- otherwise                                                    ==> false
+        * */
+
+        return binaryNode == null
+                || binaryNode.getLeft() == null && binaryNode.getRight() == null
+                || binaryNode.getLeft() != null && binaryNode.getRight() != null
+                && isFull(binaryNode.getLeft()) && isFull(binaryNode.getRight());
+
+    }
+
+    //        private static void mirror(BinaryNode binaryNode){
+//            print(binaryNode);
+//            BinaryNode bn = mirrorTree(binaryNode);
+//            System.out.print("\nthe mirror");
+//            print(bn);
+//        }
+
+    private static void mirrorTree(BinaryNode binaryNode){
+
+        if (binaryNode.getLeft() != null && binaryNode.getRight() != null){
+            BinaryNode bn = binaryNode.getLeft().duplicate();
+            binaryNode.setRight(bn);
+
+            mirrorTree(binaryNode.getLeft().duplicate());
+        }
+
+
+
+
+    }
+//    private static void print(BinaryNode binaryNode){
+//        if(binaryNode!=null){
+//            print(binaryNode.getLeft());
+//            System.out.print(" " + binaryNode.getElement());
+//            print(binaryNode.getRight());
+//        }
+//    }
+
+    //        // temporary binary node to store element during swapping
+//        BinaryNode tmpBn;
+//        if (binaryNode != null){
+//            // recurse over the BinaryTree
+//            mirror(binaryNode.getLeft());
+//            mirror(binaryNode.getRight());
+//
+//            // swapping section between the right and left child
+//            // using BinaryTree tmpBn
+//            tmpBn = binaryNode.getRight();
+//            binaryNode.setRight(binaryNode.getLeft());
+//            binaryNode.setLeft(tmpBn);
+//
+//            // tmpBn = binaryNode.getRight();
+//            // binaryNode.getRight = binaryNode.getLeft();
+//            // binaryNode.getLeft = tmpBn;
+//        }
 }

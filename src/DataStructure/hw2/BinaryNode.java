@@ -92,11 +92,11 @@ final class BinaryNode<AnyType>
     {
         BinaryNode<AnyType> root = new BinaryNode<AnyType>( element, null, null );
 
-        if( left != null )            // If there's a left subtree
-            root.left = left.duplicate( );    // Duplicate; attach
-        if( right != null )          // If there's a right subtree
-            root.right = right.duplicate( );  // Duplicate; attach
-        return root;                      // Return resulting tree
+        if( left != null )                      // If there's a left subtree
+            root.left = left.duplicate( );      // Duplicate; attach
+        if( right != null )                     // If there's a right subtree
+            root.right = right.duplicate( );    // Duplicate; attach
+        return root;                            // Return resulting tree
     }
     
     public AnyType getElement( )
@@ -130,6 +130,6 @@ final class BinaryNode<AnyType>
     }
 
     private AnyType             element;
-    private BinaryNode<AnyType> left;
-    private BinaryNode<AnyType> right;
+    public BinaryNode<AnyType> left;
+    public BinaryNode<AnyType> right;
 }
