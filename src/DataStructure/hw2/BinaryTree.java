@@ -1,5 +1,9 @@
 package DataStructure.hw2;
-
+ /*
+*  Name : Rabia Abismail
+*  ID   : 140201209
+*  Project on GitHub : I'll upload it later under this link https://git.io/vwBMQ
+*/
 
 public class BinaryTree<AnyType>
 {
@@ -76,15 +80,15 @@ public class BinaryTree<AnyType>
     private BinaryNode<AnyType> root;
 
     static public void main( String [ ] args ) {
-        BinaryTree<Integer> t1 = new BinaryTree<Integer>( 1 );
-        BinaryTree<Integer> t3 = new BinaryTree<Integer>( 3 );
-        BinaryTree<Integer> t5 = new BinaryTree<Integer>( 5 );
-        BinaryTree<Integer> t7 = new BinaryTree<Integer>( 7 );
-        BinaryTree<Integer> t2 = new BinaryTree<Integer>( );
-        BinaryTree<Integer> t4 = new BinaryTree<Integer>( );
-        BinaryTree<Integer> t6 = new BinaryTree<Integer>( );
-        BinaryTree<Integer> t8 = new BinaryTree<Integer>(8);
-        BinaryTree<Integer> t9 = new BinaryTree<Integer>(9);
+        BinaryTree<Integer> t1  = new BinaryTree<Integer>( 1 );
+        BinaryTree<Integer> t3  = new BinaryTree<Integer>( 3 );
+        BinaryTree<Integer> t5  = new BinaryTree<Integer>( 5 );
+        BinaryTree<Integer> t7  = new BinaryTree<Integer>( 7 );
+        BinaryTree<Integer> t2  = new BinaryTree<Integer>( );
+        BinaryTree<Integer> t4  = new BinaryTree<Integer>( );
+        BinaryTree<Integer> t6  = new BinaryTree<Integer>( );
+        BinaryTree<Integer> t8  = new BinaryTree<Integer>(8);
+        BinaryTree<Integer> t9  = new BinaryTree<Integer>(9);
         BinaryTree<Integer> t10 = new BinaryTree<Integer>(10);
         BinaryTree<Integer> t11 = new BinaryTree<Integer>(11);
         BinaryTree<Integer> t12 = new BinaryTree<Integer>(12);
@@ -96,7 +100,6 @@ public class BinaryTree<AnyType>
         t3.merge(3, t10, t11);
         t5.merge(5, t12, t13);
         t7.merge(7, t14, t15);
-        //t7.getRoot().setLeft(new BinaryNode<Integer>(14, null, null));
         t2.merge( 2, t1, t3 );
         t6.merge( 6, t5, t7 );
         t4.merge( 4, t2, t6 );
@@ -105,21 +108,13 @@ public class BinaryTree<AnyType>
         System.out.println(isFull(t4.getRoot()));
 
         System.out.println("Before mirroring the tree ");
-        t4.printInOrder();
-        mirrorTree(t4.getRoot());
+        t4.printPreOrder();
+        mirror(t4.getRoot());
         System.out.println("After mirroring the tree ");
-        t4.printInOrder();
-
-//        System.out.println("Heyy ");
-//        BinaryNode bn = t4.getRoot().getLeft().duplicate();
-//        t4.getRoot().setRight(bn);
-//        System.out.println(t4.getRoot().getRight().getElement());
-//        t4.printInOrder();
-
-
+        t4.printPreOrder();
     }
 
-    private static int countLeavesAtDepth(BinaryNode<Integer> binaryNode, int current, int depth) {
+    private static int countLeavesAtDepth(BinaryNode binaryNode, int current, int depth) {
         /* current is equal to 0 initially, then it'll increment until it reaches depth
         *  we have three case:
         *   1- if binaryNode is null (i.e it's empty, no node)              ==> 0
@@ -149,50 +144,21 @@ public class BinaryTree<AnyType>
                 && isFull(binaryNode.getLeft()) && isFull(binaryNode.getRight());
 
     }
-
-    //        private static void mirror(BinaryNode binaryNode){
-//            print(binaryNode);
-//            BinaryNode bn = mirrorTree(binaryNode);
-//            System.out.print("\nthe mirror");
-//            print(bn);
-//        }
-
-    private static void mirrorTree(BinaryNode binaryNode){
-
+    private static void mirror(BinaryNode binaryNode){
         if (binaryNode.getLeft() != null && binaryNode.getRight() != null){
+            // duplicate the left child
             BinaryNode bn = binaryNode.getLeft().duplicate();
+            // and assign it to the right child
             binaryNode.setRight(bn);
 
-            mirrorTree(binaryNode.getLeft().duplicate());
+            // recurse over the right side
+            mirror(binaryNode.getRight().duplicate());
+
         }
 
 
 
 
     }
-//    private static void print(BinaryNode binaryNode){
-//        if(binaryNode!=null){
-//            print(binaryNode.getLeft());
-//            System.out.print(" " + binaryNode.getElement());
-//            print(binaryNode.getRight());
-//        }
-//    }
 
-    //        // temporary binary node to store element during swapping
-//        BinaryNode tmpBn;
-//        if (binaryNode != null){
-//            // recurse over the BinaryTree
-//            mirror(binaryNode.getLeft());
-//            mirror(binaryNode.getRight());
-//
-//            // swapping section between the right and left child
-//            // using BinaryTree tmpBn
-//            tmpBn = binaryNode.getRight();
-//            binaryNode.setRight(binaryNode.getLeft());
-//            binaryNode.setLeft(tmpBn);
-//
-//            // tmpBn = binaryNode.getRight();
-//            // binaryNode.getRight = binaryNode.getLeft();
-//            // binaryNode.getLeft = tmpBn;
-//        }
 }

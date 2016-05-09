@@ -1,8 +1,8 @@
 package Java102.Hw2;
  /*
 *  Name : Rabia Abismail
-*  ID : 140201209
-*  Project on GitHub :
+*  ID   : 140201209
+*  Project on GitHub : I'll upload it later under this link https://git.io/vwBMQ
 */
 
 public class Assignment2 {
@@ -155,11 +155,11 @@ public class Assignment2 {
         }
     }
 
-    //    There is a memory problem of using oldArray = newArray, since they
-    //    will be pointing to same memory location. That is, if you change
-    //    one of them the other will change accordingly
-    //    For that reason, I implemented copyArray method
-
+    /*   There is a memory problem of using oldArray = newArray, since they
+    *    will be pointing to same memory location. That is, if you change
+    *    one of them the other will change accordingly
+    *    For that reason, I implemented copyArray method
+    */
     private static void copyArray(int[][] oldArray, int[][] newArray){
         for (int i=0; i<oldArray.length; i++)
             newArray[i] = oldArray[i].clone();
