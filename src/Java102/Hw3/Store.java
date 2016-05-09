@@ -3,7 +3,7 @@ package Java102.Hw3;
 /*
 *  Name : Rabia Abismail
 *  ID   : 140201209
-*  Project on GitHub : I'll upload it later under this link https://git.io/vwBMQ
+*  Project on GitHub : https://git.io/vrvD2
 */
 
 public class Store {
