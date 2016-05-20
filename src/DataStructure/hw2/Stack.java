@@ -20,7 +20,7 @@ public interface Stack<AnyType>
 {
     /**
      * Insert a new item into the stack.
-     * @param x the item to insert.
+     * @param x the item to add.
      */
     void    push( AnyType x );
 

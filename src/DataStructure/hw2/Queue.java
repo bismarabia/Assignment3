@@ -19,7 +19,7 @@ public interface Queue<AnyType>
 {
     /**
      * Insert a new item into the queue.
-     * @param x the item to insert.
+     * @param x the item to add.
      */
     void  enqueue( AnyType x );
     

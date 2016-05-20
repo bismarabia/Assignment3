@@ -38,7 +38,7 @@ public class ListQueue<AnyType> implements Queue<AnyType>
 
     /**
      * Insert a new item into the queue.
-     * @param x the item to insert.
+     * @param x the item to add.
      */
     public void enqueue( AnyType x )
     {

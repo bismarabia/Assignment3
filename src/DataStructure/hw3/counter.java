@@ -9,9 +9,14 @@ import java.util.Scanner;
 
 public class counter {
     public static void main(String[] arg) throws IOException{
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter a threshold: ");
+        int thresHold = sc.nextInt();
+
         try {
-            Scanner file = new Scanner(new FileInputStream("F:\\totc.txt"));
-            StringBuilder str = new StringBuilder();
+            Scanner file = new Scanner(new FileInputStream("src/DataStructure/Hw3/totc.txt"));
+            StringBuffer str = new StringBuffer();
 
             while (file.hasNext())
                 str.append(file.nextLine()).append(" ");
@@ -27,7 +32,7 @@ public class counter {
                         wordMap.put(character, 1);
 
             for(String key : wordMap.keySet())
-                if (wordMap.get(key) > 0)
+                if (wordMap.get(key) > thresHold)
                     System.out.println(key + ":\t" + wordMap.get(key));
         } catch (FileNotFoundException e) {
             e.printStackTrace();

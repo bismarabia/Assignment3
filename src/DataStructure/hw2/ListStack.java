@@ -47,7 +47,7 @@ public class ListStack<AnyType> implements Stack<AnyType>
 
     /**
      * Insert a new item into the stack.
-     * @param x the item to insert.
+     * @param x the item to add.
      */
     public void push( AnyType x )
     {

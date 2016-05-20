@@ -29,7 +29,7 @@ public class Store {
         for (Product product : products)
             if (product.getID() == productID)
                 if (product.reduceQuantity(amount)) {
-                    System.out.println(product.getName() + ": " + product.getQuantity() + " sold at "
+                    System.out.println(product.getName() + ": " + amount + " sold at "
                             + product.getPrice());
                     return product.getPrice() * product.getQuantity();
                 }
