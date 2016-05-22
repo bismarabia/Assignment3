@@ -6,9 +6,10 @@ package DataStructure.Hw4;
 * Project on Github: https://git.io/vr2ww
 * */
 
+import java.util.Random;
+
 public class medianHeap {
 
-    private MinHeap minHeap = new MinHeap(4);
     private PriorityQueue    priorityQueueMin  = new PriorityQueue();           // min-heap
     private PriorityQueueMax priorityQueueMax  = new PriorityQueueMax();        // max-heap
 
@@ -20,7 +21,7 @@ public class medianHeap {
         else if (number >= priorityQueueMin.element())
             priorityQueueMin.add(number);
         // if number is less than root of max-heap, we will insert it in min-heap
-        else if (number < priorityQueueMax.element())
+        else
             priorityQueueMax.add(number);
 
         // returning the median
@@ -42,18 +43,23 @@ public class medianHeap {
     }
 
     public static void main (String[] args) {
-        int index = 0;
+        Random random = new Random();
+        int index = 0, number;
+        double Median=0;
         medianHeap med = new medianHeap();
-        int[] array = {3, 5, 2, 9, 7, 1, 10, 0, 8, 11, 45, 100};
 
-        for(;index<array.length ; ) {
-            System.out.println(med.findMedian(array[index++]));
+        for(;index++<10; ) {
+            number = random.nextInt(50);
+            System.out.println("number == "+number);
+            Median = med.findMedian(number);
+            System.out.println(Median);
         }
 
-        System.out.println("printing the minHeap ");
+        System.out.println("\n\n===============================\nPrinting the minHeap ");
         med.priorityQueueMin.print();
-        System.out.println("\nprinting the maxHeap ");
+        System.out.println("\n\nprinting the maxHeap ");
         med.priorityQueueMax.print();
+        System.out.println("\n\nMedian == "+Median+"\n===============================");
 
     }
 
